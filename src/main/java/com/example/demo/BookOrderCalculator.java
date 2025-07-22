@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookOrderCalculator {
 
+	double basePrice = 50.0;
+
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
 
-		double basePrice = 50.0;
-
-		if (book.isEmpty())
+		if (book.isEmpty() || book.size() < 0)
 			throw new Exception("Book Basket is empty");
 
 		List<Integer> totalBooks = new ArrayList<>();
@@ -25,14 +25,36 @@ public class BookOrderCalculator {
 			}
 		}
 
-		int uniqueBooks = 0;
-		for (int i = 0; i < totalBooks.size(); i++) {
+		
+		double totalPrice = 0;
+		while (!checkAllZero(totalBooks)) {
+			int uniqueBooks = 0;
+			for (int i = 0; i < totalBooks.size(); i++) {
+				
+				if (totalBooks.get(i) > 0) {
+					uniqueBooks++;
+					totalBooks.set(i, totalBooks.get(i) - 1);
+				}
 
-			if (totalBooks.get(i) > 0) {
-				uniqueBooks++;
 			}
+			totalPrice = totalPrice + getDiscoutPrice(uniqueBooks);
 		}
 
+		return totalPrice;
+
+	}
+
+	private boolean checkAllZero(List<Integer> totalBooks) {
+		// TODO Auto-generated method stub
+		for (Integer i : totalBooks) {
+			if (i != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public double getDiscoutPrice(int uniqueBooks) {
 		double finalPrice = 0.0;
 		switch (uniqueBooks) {
 
@@ -43,16 +65,15 @@ public class BookOrderCalculator {
 			finalPrice = basePrice * uniqueBooks * 0.90;
 			break;
 		case 4:
-			finalPrice=basePrice*uniqueBooks*0.80;
+			finalPrice = basePrice * uniqueBooks * 0.80;
 			break;
 		case 5:
-			finalPrice=basePrice*uniqueBooks*0.75;
+			finalPrice = basePrice * uniqueBooks * 0.75;
 			break;
 		default:
 			return basePrice * uniqueBooks;
 
 		}
-
 		return finalPrice;
 	}
 }
