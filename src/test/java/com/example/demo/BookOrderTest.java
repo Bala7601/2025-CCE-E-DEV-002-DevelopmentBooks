@@ -30,5 +30,12 @@ public class BookOrderTest {
 		Map<String, Integer> book = Map.of("Clean Code", 1);
 		assertEquals(50, bookTest.calculateBookPrice(book), 0.1);
 	}
+	
+	@Test
+	public void checkPriceForTwoDifferentBooks() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",1,"Clean Coder",1);
+		assertEquals(95, bookTest.calculateBookPrice(book),0.1);
+		
+	}
 
 }

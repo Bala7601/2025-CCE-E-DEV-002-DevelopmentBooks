@@ -25,12 +25,25 @@ public class BookOrderCalculator {
 			}
 		}
 
-		for (Integer i : totalBooks) {
-			if (i == 1) {
-				return basePrice;
+		int uniqueBooks = 0;
+		for (int i = 0; i < totalBooks.size(); i++) {
+
+			if (totalBooks.get(i) > 0) {
+				uniqueBooks++;
 			}
 		}
 
-		return 0.0;
+		double finalPrice = 0.0;
+		switch (uniqueBooks) {
+
+		case 2:
+			finalPrice = basePrice * uniqueBooks * 0.95;
+			break;
+		default:
+			return basePrice * uniqueBooks;
+
+		}
+
+		return finalPrice;
 	}
 }
