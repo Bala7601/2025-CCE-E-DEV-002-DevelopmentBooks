@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Map;
@@ -13,14 +14,21 @@ public class BookOrderTest {
 
 	@Autowired
 	private BookOrderCalculator bookTest;
-	
+
 	@Test
 	public void checkInvalidMap() {
-	    Map<String, Integer> book = Map.of();
-	    
-	    assertThrows(Exception.class, () -> {
-	        bookTest.calculateBookPrice(book);
-	    }); 
-}
+		Map<String, Integer> book = Map.of();
+
+		assertThrows(Exception.class, () -> {
+			bookTest.calculateBookPrice(book);
+		});
+	}
+
+	@Test
+	public void checkPriceForSingleBook() throws Exception {
+
+		Map<String, Integer> book = Map.of("Clean Code", 1);
+		assertEquals(50, bookTest.calculateBookPrice(book), 0.1);
+	}
 
 }
