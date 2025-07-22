@@ -39,6 +39,9 @@ public class BookOrderCalculator {
 		case 2:
 			finalPrice = basePrice * uniqueBooks * 0.95;
 			break;
+		case 3:
+			finalPrice = basePrice * uniqueBooks * 0.90;
+			break;
 		default:
 			return basePrice * uniqueBooks;
 
