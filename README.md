@@ -41,8 +41,8 @@ Only the following books are eligible:
 - Working Effectively with Legacy Code
 
 
-# API Endpoint(Request Body (JSON))
-# POST "/bookPrice"
+#API EndPoint
+#Post request "/bookPrice"
 
 json request----
 {
