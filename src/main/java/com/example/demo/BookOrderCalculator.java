@@ -15,26 +15,31 @@ public class BookOrderCalculator {
 
 	@Autowired
 	private BookPriceCalculatorStrategy bookPriceCalculatorStrategy;
-	
+
 	@Autowired
 	private BookCatalogCleaner bookCatalogCleaner;
-	
+
 	@Autowired
 	private BookDiscount bookDiscount;
-	
+
 	@Autowired
 	private BookList bookListZero;
 
-	
+	@Autowired
+	private BookPricingHandler bookPricingHandler;
+
+	@Autowired
+	private BookDiscountProcessor bookDiscountProcessor;
+
 	List<String> bookList = Arrays.asList("Clean Code", "Clean Coder", "Clean Architechture", "Test Driven Development",
 			"Working Effectively with legacy Code");
 
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
 
-		if (book.isEmpty()) 
-			throw new Exception("Book Basket is empty"); 
+		if (book.isEmpty())
+			throw new Exception("Book Basket is empty");
 
-		book = bookCatalogCleaner.removeBooksNotListedInCatalog(book,bookList); 
+		book = bookCatalogCleaner.removeBooksNotListedInCatalog(book, bookList);
 
 		List<Integer> totalBooks = new ArrayList<>();
 
@@ -42,37 +47,23 @@ public class BookOrderCalculator {
 			if (value.getValue() > 0) {
 				totalBooks.add(value.getValue());
 			}
-		} 
+		}
 
 		int totalBooksListed = totalBooks.stream().mapToInt(Integer::intValue).sum();
 
 		double totalPrice = 0;
 
-		if (totalBooksListed > 4 && totalBooksListed % 4 == 0) { 
-			List<Integer> listToBetterDiscount = new ArrayList<>();
-			totalBooks = bookPriceCalculatorStrategy.getProfitableDiscount(listToBetterDiscount, totalBooksListed);
+		if (totalBooksListed > 4 && totalBooksListed % 4 == 0) {
 
-			for (Integer booklist : totalBooks)
-				totalPrice = totalPrice + bookDiscount.getDiscountPrice(booklist);
+			totalPrice = bookPricingHandler.getPricingWithBetterDiscount(totalBooksListed, totalPrice);
 		} else {
+   
+			totalPrice = bookDiscountProcessor.getDiscountForBooks(totalBooks, totalPrice);
 
-			while (!bookListZero.checkAllZero(totalBooks)) {
-				int uniqueBooks = 0;
-				for (int i = 0; i < totalBooks.size(); i++) {
-
-					if (totalBooks.get(i) > 0) {
-						uniqueBooks++;
-						totalBooks.set(i, totalBooks.get(i) - 1);
-					}
-
-				}
-				totalPrice = totalPrice + bookDiscount.getDiscountPrice(uniqueBooks);
-			}
 		}
 
 		return totalPrice;
 
 	}
 
-	
 }
