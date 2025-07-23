@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookConstant {
 
-	public static final String Basket_Empty = "Book Basket is empty";
+	public static final String Basket_Empty = "Book Basket is empty, Please add some books";
 	public static final List<String> bookCatalog = Arrays.asList("Clean Code", "Clean Coder", "Clean Architechture",
 			"Test Driven Development", "Working Effectively with legacy Code");
 
