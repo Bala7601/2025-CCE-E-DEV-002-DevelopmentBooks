@@ -7,8 +7,8 @@ It takes a list of books and their quantities via a POST API and returns the tot
 #Features
 
 - Accepts a `Map<String, Integer>` of book titles and quantities via POST API.
-- Applies optimized grouping to minimize the total price.
-- Removes books that are not listed in the catalog.
+- Applies a optimized grouping to minimize the total price.
+- Removes books that are not listed in the book catalog.
 - Calculates discount based on the number of unique books in each group.
 
 
@@ -41,9 +41,8 @@ Only the following books are eligible:
 - Working Effectively with Legacy Code
 
 
-# API Endpoint
+# API Endpoint(Request Body (JSON))
 # POST "/bookPrice"
-# Request Body (JSON):
 
 json request----
 {
