@@ -45,15 +45,15 @@ public class BookOrderCalculator {
 
 		for (Entry<String, Integer> value : book.entrySet()) {
 			if (value.getValue() > 0) {
-				totalBooks.add(value.getValue());
-			}
+				totalBooks.add(value.getValue());   
+			} 
 		}
 
 		int totalBooksListed = totalBooks.stream().mapToInt(Integer::intValue).sum();
 
 		double totalPrice = 0;
 
-		if (totalBooksListed > 4 && totalBooksListed % 4 == 0) {
+		if ( book.size()>1 && totalBooksListed > 4 && totalBooksListed % 4 == 0) {
 
 			totalPrice = bookPricingHandler.getPricingWithBetterDiscount(totalBooksListed, totalPrice);
 		} else {
