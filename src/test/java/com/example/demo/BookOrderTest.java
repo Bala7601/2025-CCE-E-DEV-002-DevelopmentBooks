@@ -73,9 +73,26 @@ public class BookOrderTest {
 	@Test 
 	public void checkListContainInvalidBooks() throws Exception{
 		Map<String,Integer> book=Map.of("Clean",2,"Clean Coder",1);
-		assertEquals(50,bookTest.calculateBookPrice(book),0.1);
+		assertEquals(50.0,bookTest.calculateBookPrice(book),0.1);
+	}
+	
+	@Test
+	public void checkPriceForDifferentCombinationSetOne() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",5,"Clean Coder",4);
+		assertEquals(430.0,bookTest.calculateBookPrice(book),0.1);
 	}
 	 
+	@Test
+	public void checkPriceDifferentCombinationSetTwo() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",8);
+		assertEquals(400.0,bookTest.calculateBookPrice(book),0.1);
+	}
 	
+	@Test
+	public void checkPriceDifferentCombinationSetThree() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",4,"Clean Coder",3,"Clean Architechture",
+				4,"Test Driven Development",5,"Working Effectively with legacy Code",4);
+		assertEquals(800.0,bookTest.calculateBookPrice(book),0.1);
+	}
 
 }
