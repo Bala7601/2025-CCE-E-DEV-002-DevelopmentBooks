@@ -11,12 +11,13 @@ import org.springframework.stereotype.Component;
 public class BookOrderCalculator {
 
 	double basePrice = 50.0;
-
+	
+    
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
-
+   
 		if (book.isEmpty() || book.size() < 0)
 			throw new Exception("Book Basket is empty");
-
+		
 		List<Integer> totalBooks = new ArrayList<>();
 
 		for (Entry<String, Integer> value : book.entrySet()) {
@@ -25,12 +26,11 @@ public class BookOrderCalculator {
 			}
 		}
 
-		
 		double totalPrice = 0;
 		while (!checkAllZero(totalBooks)) {
 			int uniqueBooks = 0;
 			for (int i = 0; i < totalBooks.size(); i++) {
-				
+
 				if (totalBooks.get(i) > 0) {
 					uniqueBooks++;
 					totalBooks.set(i, totalBooks.get(i) - 1);
@@ -44,7 +44,7 @@ public class BookOrderCalculator {
 
 	}
 
-	private boolean checkAllZero(List<Integer> totalBooks) {
+	public boolean checkAllZero(List<Integer> totalBooks) {
 		// TODO Auto-generated method stub
 		for (Integer i : totalBooks) {
 			if (i != 0) {
