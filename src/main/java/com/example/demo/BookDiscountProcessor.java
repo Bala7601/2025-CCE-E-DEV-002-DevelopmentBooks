@@ -26,7 +26,7 @@ public class BookDiscountProcessor {
 				}
 
 			}
-			totalPrice+= bookDiscount.getDiscountPrice(uniqueBooks);
+			totalPrice += bookDiscount.getDiscountPrice(uniqueBooks);
 		}
 
 		return totalPrice;

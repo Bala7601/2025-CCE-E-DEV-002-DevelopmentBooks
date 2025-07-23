@@ -13,10 +13,10 @@ public class BookCatalogCleaner {
 
 		Map<String, Integer> filterBooks = new ConcurrentHashMap<String, Integer>(book);
 
-		for (Entry<String, Integer> b : filterBooks.entrySet()) {
+		for (Entry<String, Integer> books : filterBooks.entrySet()) {
 
-			if (!bookList.contains(b.getKey())) {
-				filterBooks.remove(b.getKey());
+			if (!bookList.contains(books.getKey())) {
+				filterBooks.remove(books.getKey());
 			}
 
 		}

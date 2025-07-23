@@ -14,16 +14,7 @@ import org.springframework.stereotype.Component;
 public class BookOrderCalculator {
 
 	@Autowired
-	private BookPriceCalculatorStrategy bookPriceCalculatorStrategy;
-
-	@Autowired
 	private BookCatalogCleaner bookCatalogCleaner;
-
-	@Autowired
-	private BookDiscount bookDiscount;
-
-	@Autowired
-	private BookList bookListZero;
 
 	@Autowired
 	private BookPricingHandler bookPricingHandler;
@@ -31,33 +22,31 @@ public class BookOrderCalculator {
 	@Autowired
 	private BookDiscountProcessor bookDiscountProcessor;
 
-	List<String> bookList = Arrays.asList("Clean Code", "Clean Coder", "Clean Architechture", "Test Driven Development",
-			"Working Effectively with legacy Code");
-
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
 
 		if (book.isEmpty())
-			throw new Exception("Book Basket is empty");
+			throw new Exception(BookConstant.Basket_Empty);
 
-		book = bookCatalogCleaner.removeBooksNotListedInCatalog(book, bookList);
+		book = bookCatalogCleaner.removeBooksNotListedInCatalog(book, BookConstant.bookCatalog);
 
 		List<Integer> totalBooks = new ArrayList<>();
 
 		for (Entry<String, Integer> value : book.entrySet()) {
 			if (value.getValue() > 0) {
-				totalBooks.add(value.getValue());   
-			} 
+				totalBooks.add(value.getValue());
+			}
 		}
 
 		int totalBooksListed = totalBooks.stream().mapToInt(Integer::intValue).sum();
 
 		double totalPrice = 0;
-
-		if ( book.size()>1 && totalBooksListed > 4 && totalBooksListed % 4 == 0) {
+    
+		if (book.size() > 1 && totalBooksListed > BookConstant.minimumBooksToGetBetterDiscount
+				&& totalBooksListed % BookConstant.minimumBooksToGetBetterDiscount == 0) {
 
 			totalPrice = bookPricingHandler.getPricingWithBetterDiscount(totalBooksListed, totalPrice);
 		} else {
-   
+
 			totalPrice = bookDiscountProcessor.getDiscountForBooks(totalBooks, totalPrice);
 
 		}

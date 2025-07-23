@@ -8,16 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookPriceCalculatorStrategy {
 
-	public int betterDiscount_Combination = 4;
-
 	public List<Integer> getProfitableDiscount(List<Integer> bookList, int sum) {
 
 		List<Integer> betterDiscountcombination = new ArrayList<>();
 
-		while (sum >= betterDiscount_Combination && sum % betterDiscount_Combination == 0) {
+		while (sum >= BookConstant.betterDiscount_Combination && sum % BookConstant.betterDiscount_Combination == 0) {
 
-			betterDiscountcombination.add(betterDiscount_Combination);
-			sum -= betterDiscount_Combination;
+			betterDiscountcombination.add(BookConstant.betterDiscount_Combination);
+			sum -= BookConstant.betterDiscount_Combination;  
 		}
 
 		return betterDiscountcombination;
