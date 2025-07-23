@@ -13,25 +13,20 @@ import org.springframework.stereotype.Component;
 public class BookOrderCalculator {
 
 	double basePrice = 50.0;
-	
-    List<String> bookList=Arrays.asList("Clean Code","Clean Coder","Clean Architechture","Test Driven Development",
-    		"Working Effectively with legacy Code");
+
+	List<String> bookList = Arrays.asList("Clean Code", "Clean Coder", "Clean Architechture", "Test Driven Development",
+			"Working Effectively with legacy Code");
+
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
-   
+
 		if (book.isEmpty() || book.size() < 0)
 			throw new Exception("Book Basket is empty");
-		
-		Map<String,Integer> books= new ConcurrentHashMap(book);
-		
-		for(Entry<String,Integer> b:books.entrySet()) {
-			if(!bookList.contains(b.getKey())) {
-				books.remove(b.getKey());
-			}
-		}
-		
+
+		book = removeUnwantedBooks(book);
+
 		List<Integer> totalBooks = new ArrayList<>();
 
-		for (Entry<String, Integer> value : books.entrySet()) {
+		for (Entry<String, Integer> value : book.entrySet()) {
 			if (value.getValue() > 0) {
 				totalBooks.add(value.getValue());
 			}
@@ -53,6 +48,20 @@ public class BookOrderCalculator {
 
 		return totalPrice;
 
+	}
+
+	public Map<String, Integer> removeUnwantedBooks(Map<String, Integer> book) {
+
+		Map<String, Integer> dummyMap = new ConcurrentHashMap(book);
+
+		for (Entry<String, Integer> b : dummyMap.entrySet()) {
+
+			if (!bookList.contains(b.getKey())) {
+				dummyMap.remove(b.getKey());
+			}
+
+		}
+		return dummyMap;
 	}
 
 	public boolean checkAllZero(List<Integer> totalBooks) {
