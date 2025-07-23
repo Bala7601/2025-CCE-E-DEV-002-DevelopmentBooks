@@ -7,10 +7,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookOrderCalculator {
+	
+	@Autowired
+	private BookPriceCalculatorStrategy bookPriceCalculatorStrategy;
 
 	double basePrice = 50.0;
 
@@ -32,20 +36,33 @@ public class BookOrderCalculator {
 			}
 		}
 
+		int totalBooksListed = totalBooks.stream().mapToInt(Integer::intValue).sum();
+		
 		double totalPrice = 0;
-		while (!checkAllZero(totalBooks)) {
-			int uniqueBooks = 0;
-			for (int i = 0; i < totalBooks.size(); i++) {
+		
 
-				if (totalBooks.get(i) > 0) {
-					uniqueBooks++;
-					totalBooks.set(i, totalBooks.get(i) - 1);
+		if (totalBooksListed > 4 && totalBooksListed % 4 == 0) {
+			List<Integer> listToBetterDiscount = new ArrayList<>();
+			totalBooks = bookPriceCalculatorStrategy.getProfitableDiscount(listToBetterDiscount, totalBooksListed);
+
+			for (Integer booklist : totalBooks)
+				totalPrice = totalPrice + getDiscoutPrice(booklist);
+		} else {
+
+			while (!checkAllZero(totalBooks)) {
+				int uniqueBooks = 0;
+				for (int i = 0; i < totalBooks.size(); i++) {
+
+					if (totalBooks.get(i) > 0) {
+						uniqueBooks++;
+						totalBooks.set(i, totalBooks.get(i) - 1);
+					}
+
 				}
-
+				totalPrice = totalPrice + getDiscoutPrice(uniqueBooks);
 			}
-			totalPrice = totalPrice + getDiscoutPrice(uniqueBooks);
 		}
-
+		
 		return totalPrice;
 
 	}
