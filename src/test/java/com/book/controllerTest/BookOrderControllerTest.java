@@ -1,0 +1,73 @@
+package com.book.controllerTest;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Map;
+
+import javax.net.ssl.SSLEngineResult.Status;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.book.controller.BookController;
+import com.book.service.BookOrderCalculator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(BookController.class) 
+public class BookOrderControllerTest {
+
+	
+	@MockBean
+	private BookOrderCalculator bookOrder;
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+
+	@Test
+	public void testOrderBookAPI() throws JsonProcessingException, Exception {
+		Map<String, Integer> book = Map.of("Clean Code", 2, "Clean Coder", 1, "Test Driven Development", 1);
+     when(bookOrder.calculateBookPrice(book)).thenReturn(185.0);
+		mockMvc.perform(post("/books/bookPrice")
+	        .contentType(MediaType.APPLICATION_JSON)
+		        .content(objectMapper.writeValueAsString(book))).andExpect(status().isOk());
+		
+		verify(bookOrder).calculateBookPrice(book);
+		
+
+	}
+	
+	@Test
+	public void testOrderBookException() throws JsonProcessingException, Exception {
+		Map<String, Integer> book = Map.of();
+     when(bookOrder.calculateBookPrice(book)).thenThrow(new Exception("Basket is Empty, Please add some books"));
+		mockMvc.perform(post("/books/bookPrice")
+	        .contentType(MediaType.APPLICATION_JSON)
+		        .content(objectMapper.writeValueAsString(book))).andExpect(status().isNotAcceptable());
+		
+		verify(bookOrder).calculateBookPrice(book);
+		
+
+	}
+}
