@@ -1,14 +1,10 @@
 package com.book.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.book.cleaner.BookCatalogCleaner;
@@ -52,7 +48,7 @@ public class BookOrderCalculator {
 		List<List<Integer>> groups = bookList.createInitialGroups(totalBooks);
 		bookPriceCalculatorStrategy.optimizeGroups(groups);
 
-		totalPrice = bookDiscountProcessor.getDiscountForBooks(groups, BookConstant.finalPrice);
+		totalPrice = bookDiscountProcessor.calculateTotalDiscountedPrice(groups, BookConstant.finalPrice);
 
 		return totalPrice;
 

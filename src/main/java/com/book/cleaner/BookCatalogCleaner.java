@@ -3,24 +3,20 @@ package com.book.cleaner;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookCatalogCleaner {
-	public Map<String, Integer> removeBooksNotListedInCatalog(Map<String, Integer> book,List<String> bookList) {
+	public Map<String, Integer> removeBooksNotListedInCatalog(Map<String, Integer> book,List<String> catalogBooks) {
 
-		Map<String, Integer> filterBooks = new ConcurrentHashMap<String, Integer>(book);
-
-		for (Entry<String, Integer> books : filterBooks.entrySet()) {
-
-			if (!bookList.contains(books.getKey())) {
-				filterBooks.remove(books.getKey());
-			}
-
-		}
-		return filterBooks;
+		 return book.entrySet().stream()
+		            .filter(entry -> catalogBooks.contains(entry.getKey()))
+		            .collect(Collectors.toMap(
+		                Entry::getKey,
+		                Entry::getValue
+		            ));
 	}
 
 

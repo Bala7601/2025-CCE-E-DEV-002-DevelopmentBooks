@@ -10,18 +10,16 @@ import com.book.stratergy.GroupingBooks;
 @Component
 public class BookDiscountProcessor {
 
-	@Autowired
-	private GroupingBooks booklist;
 
 	@Autowired
 	private DiscountPrice bookDiscount;
 
-	public double getDiscountForBooks(List<List<Integer>> groups, double totalPrice) {
-
+	public double calculateTotalDiscountedPrice(List<List<Integer>> groups, double totalPrice) {
+		
 		for (List<Integer> group : groups) {
-            int uniqueBooks = (int) group.stream().filter(x -> x > 0).count();
-            totalPrice += bookDiscount.getDiscountPrice(uniqueBooks);
-        }
+			int uniqueBooks = (int) group.stream().filter(x -> x > 0).count();
+			totalPrice += bookDiscount.getDiscountPrice(uniqueBooks);
+		}
 
 		return totalPrice;
 

@@ -1,6 +1,5 @@
 package com.book.discount;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.book.utilityservice.BookConstant;
@@ -9,27 +8,20 @@ import com.book.utilityservice.BookConstant;
 public class DiscountPrice {
 
 	public double getDiscountPrice(int uniqueBooks) {
-		double finalPrice = BookConstant.finalPrice;
-		
-		switch (uniqueBooks) {
 
+		switch (uniqueBooks) {
 		case 2:
-			finalPrice = BookConstant.basePrice * uniqueBooks * BookConstant.discount_TwoDifferentBooks;
-			break;
+			return BookConstant.basePrice * uniqueBooks * BookConstant.discount_TwoDifferentBooks;
 		case 3:
-			finalPrice = BookConstant.basePrice * uniqueBooks * BookConstant.discount_ThreeDifferentBooks;
-			break;
+			return BookConstant.basePrice * uniqueBooks * BookConstant.discount_ThreeDifferentBooks;
 		case 4:
-			finalPrice = BookConstant.basePrice * uniqueBooks * BookConstant.discount_FourDifferentBooks;
-			break;
+			return BookConstant.basePrice * uniqueBooks * BookConstant.discount_FourDifferentBooks;
 		case 5:
-			finalPrice = BookConstant.basePrice * uniqueBooks * BookConstant.discount_FiveDifferentBooks;
-			break;
+			return BookConstant.basePrice * uniqueBooks * BookConstant.discount_FiveDifferentBooks;
 		default:
 			return BookConstant.basePrice * uniqueBooks;
 
 		}
-		return finalPrice;
 	}
 
 }
