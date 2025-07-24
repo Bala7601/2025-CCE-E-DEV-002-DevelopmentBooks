@@ -42,7 +42,7 @@ Only the following books are eligible:
 
 
 #API EndPoint
-#Post request "/bookPrice"
+#Post request "/books/bookPrice"
 
 json request----
 {
@@ -52,3 +52,5 @@ json request----
   "Working Effectively with legacy Code": 2,
   "Test Driven Development": 1
 }
+#Response:(String)
+Total Price for the Listed books : 575.0
