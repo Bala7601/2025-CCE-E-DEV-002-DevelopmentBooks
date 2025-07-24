@@ -14,20 +14,12 @@ public class BookDiscountProcessor {
 	@Autowired
 	private BookDiscount bookDiscount;
 
-	public double getDiscountForBooks(List<Integer> totalBooks, double totalPrice) {
+	public double getDiscountForBooks(List<List<Integer>> groups, double totalPrice) {
 
-		while (!booklist.checkAllZero(totalBooks)) {
-			int uniqueBooks = 0;
-			for (int i = 0; i < totalBooks.size(); i++) {
-
-				if (totalBooks.get(i) > 0) {
-					uniqueBooks++;
-					totalBooks.set(i, totalBooks.get(i) - 1);
-				}
-
-			}
-			totalPrice += bookDiscount.getDiscountPrice(uniqueBooks);
-		}
+		for (List<Integer> group : groups) {
+            int uniqueBooks = (int) group.stream().filter(x -> x > 0).count();
+            totalPrice += bookDiscount.getDiscountPrice(uniqueBooks);
+        }
 
 		return totalPrice;
 

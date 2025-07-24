@@ -16,6 +16,11 @@ public class BookConstant {
 
 	public static final double basePrice = 50.0;
 
+	public static final int Group_Five = 5;
+
+	public static final int Group_Four = 4;
+	public static final int Group_Three = 3;
+
 	public static final double finalPrice = 0.0;
 
 	public static final int betterDiscount_Combination = 4;

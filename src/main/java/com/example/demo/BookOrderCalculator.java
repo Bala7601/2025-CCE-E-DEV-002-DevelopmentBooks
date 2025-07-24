@@ -16,14 +16,20 @@ public class BookOrderCalculator {
 	@Autowired
 	private BookCatalogCleaner bookCatalogCleaner;
 
-	@Autowired
-	private BookPricingHandler bookPricingHandler;
 
 	@Autowired
 	private BookDiscountProcessor bookDiscountProcessor;
 
+	@Autowired
+	private BookPriceCalculatorStrategy bookPriceCalculatorStrategy;
+
+	@Autowired
+	private BookList bookList;
+
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
 
+		double totalPrice=0.0;
+		
 		if (book.isEmpty())
 			throw new Exception(BookConstant.Basket_Empty);
 
@@ -37,19 +43,10 @@ public class BookOrderCalculator {
 			}
 		}
 
-		int totalBooksListed = totalBooks.stream().mapToInt(Integer::intValue).sum();
+		List<List<Integer>> groups = bookList.createInitialGroups(totalBooks);
+		bookPriceCalculatorStrategy.optimizeGroups(groups);
 
-		double totalPrice = 0;
-    
-		if (book.size() > 1 && totalBooksListed > BookConstant.minimumBooksToGetBetterDiscount
-				&& totalBooksListed % BookConstant.minimumBooksToGetBetterDiscount == 0) {
-
-			totalPrice = bookPricingHandler.getPricingWithBetterDiscount(totalBooksListed, totalPrice);
-		} else {
-
-			totalPrice = bookDiscountProcessor.getDiscountForBooks(totalBooks, totalPrice);
-
-		}
+		totalPrice = bookDiscountProcessor.getDiscountForBooks(groups, BookConstant.finalPrice);
 
 		return totalPrice;
 

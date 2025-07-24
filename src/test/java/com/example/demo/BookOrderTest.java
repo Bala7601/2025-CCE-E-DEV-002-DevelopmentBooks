@@ -92,7 +92,36 @@ public class BookOrderTest {
 	public void checkPriceDifferentCombinationSetThree() throws Exception{
 		Map<String,Integer> book=Map.of("Clean Code",4,"Clean Coder",3,"Clean Architechture",
 				4,"Test Driven Development",5,"Working Effectively with legacy Code",4);
-		assertEquals(800.0,bookTest.calculateBookPrice(book),0.1);
+		assertEquals(772.5,bookTest.calculateBookPrice(book),0.1);
+	} 
+	
+	
+	@Test
+	public void checkPriceForDifferentCombinationSetFour() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",5,"Clean Coder",4);
+		assertEquals(430.0,bookTest.calculateBookPrice(book),0.1);
 	}
+	 
+	@Test
+	public void checkPriceDifferentCombinationSetFive() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",8);
+		assertEquals(400.0,bookTest.calculateBookPrice(book),0.1);
+	}
+	
+	@Test
+	public void checkPriceDifferentCombinationSetSix() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",4,"Clean Coder",3,"Clean Architechture",
+				4,"Test Driven Development",5,"Working Effectively with legacy Code",4);
+		assertEquals(772.5,bookTest.calculateBookPrice(book),0.1);
+	}
+	
+	@Test
+	public void checkPriceDifferentCombinationSetSeven() throws Exception{
+		Map<String,Integer> book=Map.of("Clean Code",4,"Clean Coder",4,"Clean Architechture",
+				3,"Test Driven Development",2,"Working Effectively with legacy Code",1);
+		assertEquals(575,bookTest.calculateBookPrice(book),0.1);
+	}
+	
+	
 
 }
