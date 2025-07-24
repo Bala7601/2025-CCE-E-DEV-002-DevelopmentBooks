@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.book.stratergy;
 
 
 
@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookList {
+public class GroupingBooks {
 
 
 	public  boolean checkAllZero(List<Integer> totalBooks) {

@@ -1,10 +1,12 @@
-package com.example.demo;
+package com.book.discount;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.book.utilityservice.BookConstant;
+
 @Component
-public class BookDiscount {
+public class DiscountPrice {
 
 	public double getDiscountPrice(int uniqueBooks) {
 		double finalPrice = BookConstant.finalPrice;

@@ -1,18 +1,20 @@
-package com.example.demo;
+package com.book.discount;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.book.stratergy.GroupingBooks;
+
 @Component
 public class BookDiscountProcessor {
 
 	@Autowired
-	private BookList booklist;
+	private GroupingBooks booklist;
 
 	@Autowired
-	private BookDiscount bookDiscount;
+	private DiscountPrice bookDiscount;
 
 	public double getDiscountForBooks(List<List<Integer>> groups, double totalPrice) {
 

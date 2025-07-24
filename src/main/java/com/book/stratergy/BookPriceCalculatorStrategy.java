@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.book.stratergy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+
+import com.book.utilityservice.BookConstant;
 
 @Component
 public class BookPriceCalculatorStrategy {
@@ -19,7 +21,7 @@ public class BookPriceCalculatorStrategy {
 				freqMap.put(size, freqMap.getOrDefault(size, 0) + 1);
 			}
 			
-			int min = Math.min(freqMap.getOrDefault(BookConstant.Group_Five, 0), 
+			int min = Math.min(freqMap.getOrDefault(BookConstant.Group_Five, 0),   
 					freqMap.getOrDefault(BookConstant.Group_Three, 0));
 			for (int i = 0; i < min; i++) {
 				freqMap.put(BookConstant.Group_Five, freqMap.get(BookConstant.Group_Five) - 1);

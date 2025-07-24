@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.book.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -9,7 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import com.book.BookApplication;
+import com.book.service.BookOrderCalculator;
+
+
+
+@SpringBootTest(classes=BookApplication.class)
 public class BookOrderTest {
 
 	@Autowired

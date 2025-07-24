@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.book.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,13 +9,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import com.book.cleaner.BookCatalogCleaner;
+import com.book.discount.BookDiscountProcessor;
+import com.book.stratergy.GroupingBooks;
+import com.book.stratergy.BookPriceCalculatorStrategy;
+import com.book.utilityservice.BookConstant;
+
+@Service
 public class BookOrderCalculator {
 
 	@Autowired
 	private BookCatalogCleaner bookCatalogCleaner;
-
 
 	@Autowired
 	private BookDiscountProcessor bookDiscountProcessor;
@@ -24,12 +30,12 @@ public class BookOrderCalculator {
 	private BookPriceCalculatorStrategy bookPriceCalculatorStrategy;
 
 	@Autowired
-	private BookList bookList;
+	private GroupingBooks bookList;
 
 	public Double calculateBookPrice(Map<String, Integer> book) throws Exception {
 
-		double totalPrice=0.0;
-		
+		double totalPrice = 0.0;
+
 		if (book.isEmpty())
 			throw new Exception(BookConstant.Basket_Empty);
 
