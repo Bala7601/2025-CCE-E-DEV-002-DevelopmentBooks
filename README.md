@@ -21,7 +21,7 @@ It takes a list of books and their quantities via a POST API and returns the tot
 
 #Discount Rules
 
-| Unique Books in Group | Discount     |
+|       UniqueBooks     |  Discount    |
 ------------------------------------
 | 2                     | 5%           |
 | 3                     | 10%          |
