@@ -44,7 +44,8 @@ Only the following books are eligible:
 #API EndPoint
 #Post request "/books/bookPrice"
 
-json request----
+#Request
+Sample json request----
 {
   "Clean Code": 4,
   "Clean Coder": 4,
@@ -52,5 +53,12 @@ json request----
   "Working Effectively with legacy Code": 2,
   "Test Driven Development": 1
 }
+
 #Response:(String)
 Total Price for the Listed books : 575.0
+
+#SwaggerAPI
+http://localhost:8080/swagger-ui/index.html#/book-controller/calculateBookprice
+
+#SwaggerDoc---(json)
+http://localhost:8080/bookOrderCalculator-api-docs
